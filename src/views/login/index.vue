@@ -7,26 +7,22 @@
         <h3 class="header">用户登录</h3>
       </div>
       <el-form-item>
-        <el-icon :size="size"
-                 :color="color" class="icon-wrapper">
-          <edit />
-        </el-icon>
-        <el-input v-model="form.user"></el-input>
+         <svg-icon icon="user" class="svg-container"></svg-icon>
+        <el-input v-model="form.user"
+                  placeholder="请您输入用户名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-icon :size="size"
-                 :color="color" class="icon-wrapper">
-          <edit />
-        </el-icon>
-        <el-input v-model="form.password"></el-input>
+        <svg-icon icon="password" class="svg-container"></svg-icon>
+        <el-input v-model="form.password"
+                  placeholder="请您输入密码"></el-input>
       </el-form-item>
+        <el-button type="primary" class="login-btn">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { Edit } from '@element-plus/icons-vue'
 const form = reactive({
   user: '',
   password: ''
@@ -53,7 +49,34 @@ $cursor: #fff;
     margin: 0 auto;
     overflow: hidden;
 
-    .login-button {
+    ::v-deep .el-form-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      color: #454545;
+    }
+
+    ::v-deep .el-input {
+      display: inline-block;
+      height: 47px;
+      width: 85%;
+      .el-input__wrapper {
+        display:block;
+        background-color:transparent;
+        box-shadow: none;
+        input {
+          background: transparent;
+          border: 0px;
+          -webkit-appearance: none;
+          border-radius: 0px;
+          padding: 12px 5px 12px 15px;
+          color: $light_gray;
+          height: 47px;
+          caret-color: $cursor;
+        }
+      }
+    }
+    .login-btn {
       width: 100%;
       box-sizing: border-box;
     }
@@ -102,9 +125,6 @@ $cursor: #fff;
   }
 
   .show-pwd {
-    // position: absolute;
-    // right: 10px;
-    // top: 7px;
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;
