@@ -1,32 +1,70 @@
 <template>
   <div class="login-container">
     <el-form :model="form"
+             :rules="rules"
              ref="formRef"
              class="login-form">
       <div class="title-container">
         <h3 class="header">用户登录</h3>
       </div>
-      <el-form-item>
-         <svg-icon icon="user" class="svg-container"></svg-icon>
+      <el-form-item prop="user">
+        <svg-icon icon="user"
+                  class="svg-container"></svg-icon>
         <el-input v-model="form.user"
+
                   placeholder="请您输入用户名"></el-input>
       </el-form-item>
-      <el-form-item>
-        <svg-icon icon="password" class="svg-container"></svg-icon>
+      <el-form-item prop="password">
+        <svg-icon icon="password"
+                  class="svg-container"></svg-icon>
         <el-input v-model="form.password"
+
                   placeholder="请您输入密码"></el-input>
       </el-form-item>
-        <el-button type="primary" class="login-btn">登录</el-button>
+      <el-button type="primary"
+                 class="login-btn" @click="handleLogin(formRef)">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+// 获取formRef
+const formRef = ref<FormInstance>()
+// 表单绑定数据
 const form = reactive({
   user: '',
   password: ''
 })
+// 验证表单
+const rules = reactive<FormRules>({
+  user: [
+    {
+      required: true,
+      message: '请输入用户名',
+      trigger: 'blur'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: '请输入密码',
+      trigger: 'blur'
+    }
+  ]
+})
+
+const handleLogin = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,8 +99,8 @@ $cursor: #fff;
       height: 47px;
       width: 85%;
       .el-input__wrapper {
-        display:block;
-        background-color:transparent;
+        display: block;
+        background-color: transparent;
         box-shadow: none;
         input {
           background: transparent;
